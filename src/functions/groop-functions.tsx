@@ -1,4 +1,4 @@
-import { NULL_PLAYER } from "@/pages/groop/constants";
+import { NULL_PLAYER } from "@/store/constants";
 
 const shuffle = (array: Array<string | number>) => {
   let currentIndex = array.length,

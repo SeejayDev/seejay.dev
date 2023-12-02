@@ -5,7 +5,7 @@ import {
   removeFromPlayerList,
 } from "@/functions/groop-functions-playerlist";
 import React, { useEffect, useState } from "react";
-import { NULL_PLAYER } from "./constants";
+import { NULL_PLAYER } from "../../store/constants";
 import Link from "next/link";
 import GroopHeader from "./components/header";
 import PersonIcon from "@/icons/PersonIcon";
