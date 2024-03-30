@@ -7,7 +7,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { NULL_PLAYER } from "../../store/constants";
 import Link from "next/link";
-import GroopHeader from "./components/header";
+import GroopHeader from "../../components/groop/GroopHeader";
 import PersonIcon from "@/icons/PersonIcon";
 import CrossIcon from "@/icons/CrossIcon";
 import PersonAddIcon from "@/icons/PersonAddIcon";
@@ -18,11 +18,21 @@ import {
   setConfiguration,
 } from "@/functions/groop-functions-playerlist-configuration";
 import CrossedSwordsIcon from "@/icons/CrossedSwordsIcon";
+import ShareIcon from "@/icons/ShareIcon";
+import { Share } from "next/font/google";
+import PencilIcon from "@/icons/PencilIcon";
+import QRCode from "react-qr-code";
+import {
+  clearStorageRounds,
+  fetchStorageRounds,
+  setStorageRounds,
+} from "@/functions/groop-functions-rounds";
 
 const advanced = () => {
   const [players, setPlayers] = useState<Array<string>>([]);
   const [nameInput, setNameInput] = useState("");
   const [rounds, setRounds] = useState<Array<Array<Array<string>>>>([]);
+  const [qrCodeValue, setQrCodeValue] = useState("");
 
   const _addNewPlayer = () => {
     if (nameInput !== "" && nameInput !== NULL_PLAYER) {
@@ -42,22 +52,42 @@ const advanced = () => {
     let roundsAndGroups = generateRounds(
       shuffled.map((player) => player.toString())
     );
-    setConfiguration(playerList);
+
+    roundsAndGroups = shuffle([...roundsAndGroups]);
+    roundsAndGroups = roundsAndGroups.map((round) => shuffle(round));
+
+    // setConfiguration(shuffled);
     setRounds(roundsAndGroups);
+    setStorageRounds(roundsAndGroups);
+    // setQrCodeValue(JSON.stringify(shuffled));
   };
 
   const syncStateWithStorage = () => {
     setPlayers(fetchPlayerList());
   };
 
+  const resetRounds = () => {
+    setRounds([]);
+    clearStorageRounds();
+  };
+
   useEffect(() => {
+    // fetch existing player list from storage
     let playerList = fetchPlayerList();
     setPlayers(playerList);
-    let playerlistConfiguration = fetchConfiguration();
-    if (playerlistConfiguration) {
-      let roundsAndGroups = generateRounds(playerList);
-      setRounds(roundsAndGroups);
+
+    // check if rounds have been generated
+    let previousGeneratedRounds = fetchStorageRounds();
+    if (previousGeneratedRounds) {
+      setRounds(previousGeneratedRounds);
     }
+
+    // let playerlistConfiguration = fetchConfiguration();
+    // if (playerlistConfiguration) {
+    //   let roundsAndGroups = generateRounds(playerList);
+    //   setRounds(roundsAndGroups);
+    //   setQrCodeValue(JSON.stringify(playerList));
+    // }
   }, []);
 
   return (
@@ -176,12 +206,29 @@ const advanced = () => {
             })}
           </Swiper>
 
-          <button
-            className="border-2 w-full cursor-pointer touchable-opacity border-purple-600 rounded-md py-2 font-bold text-purple-600"
-            onClick={() => setRounds([])}
-          >
-            Edit Player List
-          </button>
+          <div className="flex gap-2 items-center text-sm font-bold">
+            <button
+              className="border-2 w-1/2 cursor-pointer touchable-opacity border-purple-600 rounded-md py-2 text-purple-600"
+              onClick={() => resetRounds()}
+            >
+              <div className="flex items-center justify-center gap-4">
+                <p>Edit Players</p>
+                <PencilIcon className="text-xl" />
+              </div>
+            </button>
+
+            <button
+              className="border-2 w-1/2 cursor-pointer touchable-opacity border-purple-600 rounded-md py-2 text-purple-600"
+              onClick={() => {}}
+            >
+              <div className="flex items-center justify-center gap-4">
+                <p>Share</p>
+                <ShareIcon className="text-xl" />
+              </div>
+            </button>
+          </div>
+
+          {/* <QRCode value={qrCodeValue} className="w-24 h-24" /> */}
         </>
       )}
     </div>
