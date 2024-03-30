@@ -1,6 +1,6 @@
 import { NULL_PLAYER } from "@/store/constants";
 
-const shuffle = (array: Array<string | number>) => {
+const shuffle = (array: Array<any>) => {
   let currentIndex = array.length,
     randomIndex;
 
