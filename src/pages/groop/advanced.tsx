@@ -49,9 +49,7 @@ const advanced = () => {
 
   const _generateGroups = (playerList: Array<string>) => {
     let shuffled = shuffle([...playerList]);
-    let roundsAndGroups = generateRounds(
-      shuffled.map((player) => player.toString())
-    );
+    let roundsAndGroups = generateRounds(shuffled);
 
     roundsAndGroups = shuffle([...roundsAndGroups]);
     roundsAndGroups = roundsAndGroups.map((round) => shuffle(round));
@@ -81,13 +79,6 @@ const advanced = () => {
     if (previousGeneratedRounds) {
       setRounds(previousGeneratedRounds);
     }
-
-    // let playerlistConfiguration = fetchConfiguration();
-    // if (playerlistConfiguration) {
-    //   let roundsAndGroups = generateRounds(playerList);
-    //   setRounds(roundsAndGroups);
-    //   setQrCodeValue(JSON.stringify(playerList));
-    // }
   }, []);
 
   return (
@@ -171,7 +162,10 @@ const advanced = () => {
                       {round.map((group, idx2) => {
                         let isOddPair = idx2 % 2 !== 0;
                         return (
-                          <div key={`pair_${idx}`} className="relative">
+                          <div
+                            key={`round_${idx}_pair_${idx2}`}
+                            className="relative"
+                          >
                             <div
                               className={`p-3 w-full mt-3 ${
                                 !isOddPair
@@ -188,7 +182,7 @@ const advanced = () => {
                             </div>
 
                             {isOddPair && (
-                              <div className="absolute left-1/2 top-0 transform -translate-x-1/2 -translate-y-1/2 pb-2">
+                              <div className="absolute left-1/2 top-0 transform -translate-x-1/2 -translate-y-1/2 pb-3">
                                 <div
                                   className={`bg-purple-900 w-16 h-16 p-3 rounded-full border-8 border-white flex items-center justify-center z-20`}
                                 >
@@ -218,7 +212,8 @@ const advanced = () => {
             </button>
 
             <button
-              className="border-2 w-1/2 cursor-pointer touchable-opacity border-purple-600 rounded-md py-2 text-purple-600"
+              disabled={true}
+              className="border-2 w-1/2 cursor-pointer border-purple-600 rounded-md py-2 text-purple-600 opacity-50"
               onClick={() => {}}
             >
               <div className="flex items-center justify-center gap-4">

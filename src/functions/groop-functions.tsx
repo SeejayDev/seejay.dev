@@ -33,7 +33,7 @@ interface PartnerListObject {
   [key: string]: Array<string>;
 }
 const generateRounds = (originalPlayerList: Array<string>) => {
-  let playerList = [...originalPlayerList].map((player) => player.toString());
+  let playerList = [...originalPlayerList];
   if (playerList.length % 2 !== 0) {
     playerList.push(NULL_PLAYER);
   }
@@ -46,7 +46,7 @@ const generateRounds = (originalPlayerList: Array<string>) => {
   for (let i = 0; i < playerList.length; i++) {
     let currentPlayer = playerList[i];
     let playerListCopy = [...playerList];
-    playerListCopy.splice(playerList.indexOf(currentPlayer), 1);
+    playerListCopy.splice(i, 1);
 
     partners[currentPlayer] = playerListCopy;
   }
@@ -124,10 +124,8 @@ const generateRounds = (originalPlayerList: Array<string>) => {
         // when I pop CE, I want to remove banned groups for D
         // however, when I pop DE, I want to retain CE, but clear I
         bannedGroups = bannedGroups.filter((group) => {
-          let poppedPlayer1 = lastGroup[0];
-          let groupPlayer1 = group[0];
-          let poppedPlayer1Index = playerList.indexOf(poppedPlayer1);
-          let groupPlayer1Index = playerList.indexOf(groupPlayer1);
+          let poppedPlayer1Index = playerList.indexOf(lastGroup[0]);
+          let groupPlayer1Index = playerList.indexOf(group[0]);
           return groupPlayer1Index <= poppedPlayer1Index;
         });
 
