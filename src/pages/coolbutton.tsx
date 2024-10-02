@@ -5,7 +5,7 @@ const coolbutton = () => {
   const [isPressed, setIsPressed] = useState(false);
 
   return (
-    <div className="w-full sm:max-w-2xl mx-auto mt-8">
+    <div className="w-full max-w-2xl px-4 mx-auto mt-8">
       <div className="flex flex-wrap items-center text-lg justify-center">
         <p>The</p>
         <img
@@ -22,26 +22,26 @@ const coolbutton = () => {
 
       <div className="mt-8 w-full">
         <p>First I recreated:</p>
-        <button className="bg-green-600 mt-1 hover:bg-green-700 rounded-md px-4 py-1 text-sm text-white font-bold shadow-[0_8px_#166534] active:shadow-none active:translate-y-[8px] transition-all duration-150">
+        <button className="bg-green-600 mt-1 active:bg-green-700 md:hover:bg-green-700 rounded-md px-4 py-1 text-sm text-white font-bold shadow-[0_8px_#166534] active:shadow-none active:translate-y-[8px] transition-all duration-150">
           <p>The original</p>
         </button>
 
         <div className="mt-8">
           <p>Then I did it my way:</p>
           <button
-            className="group w-full aspect-[7/3] relative flex flex-col justify-end mt-2"
-            onMouseDown={() => setIsPressed(true)}
-            onMouseUp={() => setIsPressed(false)}
+            className="group w-full aspect-[7/3] relative flex flex-col justify-end mt-2 shadow-lg rounded-2xl"
+            onPointerDown={() => setIsPressed(true)}
+            onPointerUp={() => setIsPressed(false)}
           >
-            <div className="bg-green-600 hover:bg-green-700 rounded-2xl w-full h-5/6 z-20 absolute top-0 group-active:translate-y-[20%] transition-all duration-150">
+            <div className="bg-green-600 active:bg-green-700 md:hover:bg-green-700 rounded-2xl w-full h-5/6 z-20 absolute top-0 group-active:translate-y-[20%] transition-all duration-150">
               <div className="w-full h-full flex items-center justify-center">
-                <p className="text-white font-bold text-6xl">Button Pro Max</p>
+                <p className="text-white font-bold text-4xl md:text-5xl select-none">
+                  Button Pro Max
+                </p>
               </div>
             </div>
             <div className="relative h-1/2 w-full pointer-events-none">
               <div className="bg-green-800 rounded-2xl h-full z-10 relative"></div>
-              {/* <LightIcon className="h-full text-transparent group-active:text-yellow-400 transition-colors duration-150 w-auto absolute right-0 bottom-0 rotate-90 -translate-y-1/4 translate-x-1/2 z-0" />
-              <LightIcon className="h-full text-transparent group-active:text-yellow-400 transition-colors duration-150 w-auto absolute left-0 bottom-0 -rotate-90 -translate-y-1/4 -translate-x-1/2 z-0" /> */}
             </div>
           </button>
         </div>
